@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -29,12 +30,14 @@
     self.tableView.delegate = self;
     
     // Make network request to get movies
+    [self.activityIndicator startAnimating];
     [self fetchMovies];
     
     // Setup refresh at the top of scroll
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
 }
 
 - (void)fetchMovies {
@@ -61,6 +64,7 @@
         }
         // Always end refreshing regardless of error status
         [self.refreshControl endRefreshing];
+        [self.activityIndicator stopAnimating];
     }];
     [task resume];
 }
