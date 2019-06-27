@@ -7,11 +7,10 @@
 //
 
 #import "MoviesGridViewController.h"
+#import "MovieCollectionViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
-@interface MoviesGridViewController ()
-
-//TODO: uncoment
-//<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface MoviesGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) NSArray *movies;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -23,10 +22,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // TODO: uncomment
     // Set up collection view
-    //self.collectionView.dataSource = self;
-    //self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    
+    [self fetchMovies];
 }
 
 - (void)fetchMovies {
@@ -43,6 +43,7 @@
             
             // Get the array of movies and store in a property
             self.movies = dataDictionary[@"results"];
+            [self.collectionView reloadData];
             
         }
     }];
@@ -59,16 +60,28 @@
 }
 */
 
-
-// TODO: implement
-/*
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    <#code#>
+    
+    MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieCollectionViewCell" forIndexPath:(indexPath)];
+    
+    NSDictionary *movie = self.movies[indexPath.item];
+    
+    // Get movie poster url
+    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+    NSString *posterURLString = movie[@"poster_path"];
+    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+    
+    // Load movie poster
+    cell.posterView.image = nil;
+    [cell.posterView setImageWithURL:posterURL];
+    
+    return cell;
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    <#code#>
+    return self.movies.count;
 }
-*/
+
 
 @end
