@@ -51,14 +51,10 @@
         else {
             // Grab all movie data
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSLog(@"%@", dataDictionary);
             
             // Get the array of movies and store in a property
             self.movies = dataDictionary[@"results"];
-            for (NSDictionary *movie in self.movies) {
-                NSLog(@"%@", movie[@"title"]);
-            }
-            
+  
             // Reload table view data
             [self.tableView reloadData];
         }
@@ -107,8 +103,6 @@
     // Give movie to details view controller
     DetailsViewController *detailsViewController = [segue destinationViewController];
     detailsViewController.movie = movie;
-    
-    NSLog(@"Tapping on a movie");
 }
 
 
