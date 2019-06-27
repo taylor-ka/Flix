@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
+@property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
 
 @end
 
@@ -36,11 +38,23 @@
     NSURL *backdropURL = [NSURL URLWithString:fullBackdropURLString];
     [self.backdropView setImageWithURL:backdropURL];
     
-    // Title and synopsis
+    // Title
     self.titleLabel.text = self.movie[@"title"];
     [self.titleLabel sizeToFit];
+    
+    // Release Date
+    self.releaseDateLabel.text = [NSString stringWithFormat:@"Release Date: %@", self.movie[@"release_date"]];
+    [self.releaseDateLabel sizeToFit];
+    
+    // Average Rating
+    self.ratingLabel.text = [NSString stringWithFormat:@"Average Rating: %@ / 10 ☆", self.movie[@"vote_average"]];
+    [self.ratingLabel sizeToFit];
+    
+    // Synopsis
     self.synopsisLabel.text = self.movie[@"overview"];
     [self.synopsisLabel sizeToFit];
+    
+    
 }
 
 /*
