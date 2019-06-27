@@ -162,7 +162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XCn-yM-8Il" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1792.8" y="679.61019490254876"/>
+            <point key="canvasLocation" x="2313" y="719"/>
         </scene>
         <!--Now Playing-->
         <scene sceneID="hGV-A5-rQm">
@@ -183,11 +183,11 @@
             </objects>
             <point key="canvasLocation" x="45.600000000000001" y="679.61019490254876"/>
         </scene>
-        <!--By Category-->
+        <!--By Genre-->
         <scene sceneID="0pT-qE-Kbh">
             <objects>
                 <navigationController id="Wai-TR-FsS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="By Category" image="now_playing_tabbar_item" selectedImage="now_playing_tabbar_item" id="7ic-eg-MYP"/>
+                    <tabBarItem key="tabBarItem" title="By Genre" image="now_playing_tabbar_item" selectedImage="now_playing_tabbar_item" id="7ic-eg-MYP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PbP-sw-yKN">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -200,7 +200,7 @@
             </objects>
             <point key="canvasLocation" x="113" y="1845"/>
         </scene>
-        <!--Genre View Controller-->
+        <!--By Genre-->
         <scene sceneID="ftR-ST-ck6">
             <objects>
                 <viewController id="ZXF-zX-lUb" customClass="GenreViewController" sceneMemberID="viewController">
@@ -236,12 +236,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uwJ-fx-ewA">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="rf1-6P-i4p"/>
                     </view>
-                    <navigationItem key="navigationItem" id="0M2-hZ-zTY"/>
+                    <navigationItem key="navigationItem" title="By Genre" id="0M2-hZ-zTY"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="uwJ-fx-ewA" id="uU5-NY-qID"/>
                         <outlet property="tableView" destination="tw6-Er-AAr" id="sQY-nx-Qoq"/>
                     </connections>
                 </viewController>
@@ -249,7 +255,7 @@
             </objects>
             <point key="canvasLocation" x="1044" y="1845"/>
         </scene>
-        <!--Movies Grid View Controller-->
+        <!--By Genre-->
         <scene sceneID="X7N-wg-z4r">
             <objects>
                 <viewController id="m75-Io-Bdl" customClass="MoviesGridViewController" sceneMemberID="viewController">
@@ -288,12 +294,18 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="W1C-xb-Xii">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="2lQ-NG-ISm"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Doj-MZ-ZbN"/>
+                    <navigationItem key="navigationItem" title="By Genre" id="Doj-MZ-ZbN"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="W1C-xb-Xii" id="v5u-Ta-tHw"/>
                         <outlet property="collectionView" destination="h4q-3P-at6" id="EBT-Bp-spm"/>
                     </connections>
                 </viewController>

@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) NSArray *movies;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -27,9 +28,12 @@
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
+    // Load data
+    [self.activityIndicator startAnimating];
     [self fetchMovies];
     
     // Set up layout
+    // Two movies per row with border in between
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     
     layout.minimumInteritemSpacing = 5;
@@ -39,11 +43,14 @@
     CGFloat itemWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (postersPerLine -1)) / postersPerLine;
     CGFloat itemHeight = itemWidth * 1.5;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    
+    // Navigation bar
+    self.navigationItem.title = self.genre[@"name"];
 }
 
 - (void)fetchMovies {
     // Find movies by genre with id
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/discover/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&with_genres=%@", self.genreID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/discover/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&with_genres=%@", self.genre[@"id"]]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -54,11 +61,11 @@
             // Grab all movie data
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
-            // Get the array of movies and store in a property
+            // Get the array of movies of this genre and store in a property
             self.movies = dataDictionary[@"results"];
             [self.collectionView reloadData];
-            
         }
+        [self.activityIndicator stopAnimating];
     }];
     [task resume];
 }
@@ -79,8 +86,8 @@
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
+    // Create cell and grab current movie
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieCollectionViewCell" forIndexPath:(indexPath)];
-    
     NSDictionary *movie = self.movies[indexPath.item];
     
     // Get movie poster url

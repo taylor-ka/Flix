@@ -54,7 +54,8 @@
     self.synopsisLabel.text = self.movie[@"overview"];
     [self.synopsisLabel sizeToFit];
     
-    
+    // Navigation title
+    self.navigationItem.title = self.movie[@"title"];
 }
 
 /*

@@ -11,8 +11,11 @@
 #import "MoviesGridViewController.h"
 
 @interface GenreViewController () <UITableViewDataSource, UITableViewDelegate>
+
 @property (nonatomic, strong) NSArray *genres;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 @end
 
 @implementation GenreViewController
@@ -25,6 +28,7 @@
     self.tableView.delegate = self;
     
     // Make network request to get genres
+    [self.activityIndicator startAnimating];
     [self fetchGenres];
 }
 
@@ -40,12 +44,13 @@
             // Grab all movie data
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
-            // Get the array of movies and store in a property
+            // Get all genres and store in a property
             self.genres = dataDictionary[@"genres"];
             
             // Reload table view data
             [self.tableView reloadData];
         }
+        [self.activityIndicator stopAnimating];
     }];
     [task resume];
 }
@@ -58,11 +63,10 @@
     // Grab information about current cell genre
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-    NSDictionary *genre = self.genres[indexPath.row];
     
     // Give genre to movies view controller
     MoviesGridViewController *gridController = [segue destinationViewController];
-    gridController.genreID = genre[@"id"];
+    gridController.genre = self.genres[indexPath.row];
 }
 
 
