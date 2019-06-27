@@ -1,3 +1,4 @@
+ls
 # Project 2 - *Flix*
 
 **Flix** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
@@ -22,7 +23,7 @@ The following **optional** features are implemented:
 - [ ] User can view the large movie poster by tapping on a cell.
 - [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
 - [ ] Customize the selection effect of the cell.
-- [ ] Customize the navigation bar.
+- [x] Customize the navigation bar.
 - [ ] Customize the UI.
 
 The following **additional** features are implemented:
