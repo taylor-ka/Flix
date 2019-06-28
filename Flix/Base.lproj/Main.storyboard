@@ -95,7 +95,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a8B-SO-I2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1364" y="1504"/>
+            <point key="canvasLocation" x="-1324" y="1119"/>
         </scene>
         <!--Details-->
         <scene sceneID="hUd-xU-DkY">
@@ -120,7 +120,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ogo-7c-UHI">
                                         <rect key="frame" x="145" y="272" width="208" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -162,7 +162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XCn-yM-8Il" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2313" y="719"/>
+            <point key="canvasLocation" x="3257" y="888"/>
         </scene>
         <!--Now Playing-->
         <scene sceneID="hGV-A5-rQm">
@@ -198,7 +198,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kcK-vl-qWk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="113" y="1845"/>
+            <point key="canvasLocation" x="7" y="1504"/>
         </scene>
         <!--By Genre-->
         <scene sceneID="ftR-ST-ck6">
@@ -253,7 +253,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hra-wT-bCD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1044" y="1845"/>
+            <point key="canvasLocation" x="938" y="1504"/>
         </scene>
         <!--By Genre-->
         <scene sceneID="X7N-wg-z4r">
@@ -311,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APX-Wt-beZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1972" y="1845"/>
+            <point key="canvasLocation" x="1978" y="1504"/>
         </scene>
     </scenes>
     <resources>
@@ -319,6 +319,6 @@
         <image name="ticket_tabbar_icon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lnH-dI-hY1"/>
+        <segue reference="SbE-Yn-18X"/>
     </inferredMetricsTieBreakers>
 </document>

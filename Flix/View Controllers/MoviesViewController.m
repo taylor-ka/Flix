@@ -11,12 +11,14 @@
 #import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) NSArray *filteredData;
 
 @end
 
@@ -33,11 +35,21 @@
     [self.activityIndicator startAnimating];
     [self fetchMovies];
     
+    // Set up search controller
+    // Do not dim view since we are using current controller to display results
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    
+    // Set up search bar
+    [self.searchController.searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
+    
     // Setup refresh at the top of scroll
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
-    
 }
 
 - (void)fetchMovies {
@@ -55,6 +67,9 @@
             // Get the array of movies and store in a property
             self.movies = dataDictionary[@"results"];
   
+            // Set up filtered movies
+            self.filteredData = self.movies;
+            
             // Reload table view data
             [self.tableView reloadData];
         }
@@ -66,12 +81,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.movies.count;
+    return self.filteredData.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Grab current info of current movie
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = self.filteredData[indexPath.row];
     
     // Create cell for movie with title and synopsis
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
@@ -90,6 +105,23 @@
     return cell;
 }
 
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
+    NSString *searchText = searchController.searchBar.text;
+    if (searchText) {
+        
+        if (searchText.length != 0) { // no text
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title beginswith[cd] %@", searchText];
+            self.filteredData = [self.movies filteredArrayUsingPredicate:predicate];
+        }
+        else {
+            self.filteredData = self.movies;
+        }
+        
+    }
+    [self.tableView reloadData];
+    
+}
 
 #pragma mark - Navigation
 
@@ -98,7 +130,7 @@
     // Grab information about current cell movie (sender)
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = self.filteredData[indexPath.row];
     
     // Give movie to details view controller
     DetailsViewController *detailsViewController = [segue destinationViewController];
