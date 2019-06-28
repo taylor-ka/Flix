@@ -44,14 +44,11 @@
     CGFloat itemHeight = itemWidth * 1.5;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     
-    // Navigation bar
-    self.navigationItem.title = self.genre[@"name"];
 }
 
 - (void)fetchMovies {
-    // Find movies by genre with id
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/discover/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&with_genres=%@", self.genre[@"id"]]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    // Find movies using given url
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
@@ -90,16 +87,17 @@
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieCollectionViewCell" forIndexPath:(indexPath)];
     NSDictionary *movie = self.movies[indexPath.item];
     
-    // Get movie poster url
-    NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-    NSString *posterURLString = movie[@"poster_path"];
-    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
-    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-    
-    // Load movie poster
+    // Get movie poster if it exists
     cell.posterView.image = nil;
-    [cell.posterView setImageWithURL:posterURL];
-    
+    if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
+        NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
+        NSString *posterURLString = movie[@"poster_path"];
+        NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+        NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+        [cell.posterView setImageWithURL:posterURL];
+    } else {
+        cell.posterView.image = [UIImage imageNamed:@"generic_movie_poster"];
+    }
     return cell;
 }
 

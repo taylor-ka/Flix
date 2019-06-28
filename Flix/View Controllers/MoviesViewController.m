@@ -102,6 +102,7 @@
     // Load movie poster
     cell.posterView.image = nil;
     [cell.posterView setImageWithURL:posterURL];
+    
     return cell;
 }
 

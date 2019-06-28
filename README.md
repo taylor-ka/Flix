@@ -28,12 +28,14 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
+- [x] Tab bar.
 - [x] View movies by genre.
+- [x] Generic images for movies without poster/backdrop.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Separation of each view controller - what information shoudl be passed along, who should be loading what, etc.
+2. How to reduce redundancy between view controllers
 
 ## Video Walkthrough
 

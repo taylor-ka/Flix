@@ -9,6 +9,7 @@
 #import "GenreViewController.h"
 #import "GenreCell.h"
 #import "MoviesGridViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface GenreViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -66,7 +67,14 @@
     
     // Give genre to movies view controller
     MoviesGridViewController *gridController = [segue destinationViewController];
-    gridController.genre = self.genres[indexPath.row];
+    
+    NSDictionary *genre = self.genres[indexPath.row];
+    NSString *genreID = genre[@"id"];
+    gridController.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/discover/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&with_genres=%@", genreID]];
+    
+    // Navigation bar for next
+    gridController.navigationItem.title = genre[@"name"];
+    
 }
 
 

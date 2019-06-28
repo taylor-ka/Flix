@@ -27,16 +27,26 @@
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     
     // Poster
-    NSString *posterURLString = self.movie[@"poster_path"];
-    NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
-    NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-    [self.posterView setImageWithURL:posterURL];
+    self.posterView.image = nil;
+    if ([self.movie[@"poster_path"] isKindOfClass:[NSString class]]) {
+        NSString *posterURLString = self.movie[@"poster_path"];
+        NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+        NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
+        [self.posterView setImageWithURL:posterURL];
+    } else {
+        self.posterView.image = [UIImage imageNamed:@"generic_movie_poster"];
+    }
 
     // Backdrop
-    NSString *backdropURLString = self.movie[@"backdrop_path"];
-    NSString *fullBackdropURLString = [baseURLString stringByAppendingString:backdropURLString];
-    NSURL *backdropURL = [NSURL URLWithString:fullBackdropURLString];
-    [self.backdropView setImageWithURL:backdropURL];
+    self.backdropView.image = nil;
+    if ([self.movie[@"backdrop_path"] isKindOfClass:[NSString class]]) {
+        NSString *backdropURLString = self.movie[@"backdrop_path"];
+        NSString *fullBackdropURLString = [baseURLString stringByAppendingString:backdropURLString];
+        NSURL *backdropURL = [NSURL URLWithString:fullBackdropURLString];
+        [self.backdropView setImageWithURL:backdropURL];
+    } else {
+        self.backdropView.image = [UIImage imageNamed:@"GenericMovieTheater"];
+    }
     
     // Title
     self.titleLabel.text = self.movie[@"title"];

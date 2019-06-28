@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MoviesGridViewController : UIViewController
 
-@property (nonatomic, strong) NSDictionary *genre;
+@property (nonatomic, strong) NSURL *url;
 
 @end
 
