@@ -29,7 +29,6 @@
     self.collectionView.delegate = self;
     
     // Load data
-    [self.activityIndicator startAnimating];
     [self fetchMovies];
     
     // Set up layout
@@ -47,6 +46,8 @@
 }
 
 - (void)fetchMovies {
+    [self.activityIndicator startAnimating];
+    
     // Find movies using given url
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];

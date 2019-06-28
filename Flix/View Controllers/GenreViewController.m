@@ -89,4 +89,9 @@
     return self.genres.count;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Row will only be selected when user clicks
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 @end
