@@ -3,7 +3,7 @@ ls
 
 **Flix** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **18** hours spent in total
 
 ## User Stories
 
@@ -42,7 +42,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/2G2wo7JxsP.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -50,11 +50,17 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 Describe any challenges encountered while building the app.
 
+- Learning how to debug using xcode and understand the stack trace
+- Understanding how create the search bar was difficult, especially in conjuction with the collection view
+
 ## Credits
 
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [Movie Theater Image](http://www.premierecinemas.net/images/GenericMovieTheater.jpg)
+- [Generic Movie Poster](http://www.rgbstock.com/cache1nToqD/users/g/gr/greekgod/300/mlns11c.jpg)
+- [Movie Ticket](http://absolutebookmarking.net/wp-content/uploads/ticket-printing-templates-meloin-tandemco-blank-tickets-for-printing.png)
 
 ## License
 
