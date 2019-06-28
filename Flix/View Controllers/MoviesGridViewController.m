@@ -88,16 +88,33 @@
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieCollectionViewCell" forIndexPath:(indexPath)];
     NSDictionary *movie = self.movies[indexPath.item];
     
-    // Get movie poster if it exists
     cell.posterView.image = nil;
-    if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
+    if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) { // If movie poster exists
+        // Form URL and make request
         NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
         NSString *posterURLString = movie[@"poster_path"];
         NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
         NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-        [cell.posterView setImageWithURL:posterURL];
+        NSURLRequest *request = [NSURLRequest requestWithURL:posterURL];
+        
+        // Fade image in
+        __weak MovieCollectionViewCell *weakCell = cell;
+        [cell.posterView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *imageRequest,
+                                                                                       NSHTTPURLResponse *imageResponse, UIImage *image) {
+                weakCell.posterView.alpha = 0.0;
+                weakCell.posterView.image = image;
+                                                
+                // Animate UIImageView back to alpha 1 over 0.3sec
+                [UIView animateWithDuration:0.4 animations:^{
+                    weakCell.posterView.alpha = 1.0;
+                }];
+            }
+            failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+                // do something for the failure condition
+        }];
         cell.titleIfNoPoster.text = nil;
-    } else {
+        
+    } else { // No movie poster, use generic
         cell.posterView.image = [UIImage imageNamed:@"generic_movie_poster"];
         cell.titleIfNoPoster.text = movie[@"title"];
     }
@@ -107,6 +124,5 @@
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.movies.count;
 }
-
 
 @end

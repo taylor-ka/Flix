@@ -27,16 +27,19 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if (searchBar.text.length != 0) {
+    if (searchBar.text.length != 0) { // Show popular movies if no text
         super.url =[NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/search/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&query=%@&page=1&include_adult=false", searchBar.text]];
-    } else {
+    } else { // User has entered a search
         super.url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&page=1"];
     }
+    
+    // Update movies and hide keyboard
     [super fetchMovies];
     [self.view endEditing:YES];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    // Return to popular movies
     [self.view endEditing:YES];
     self.searchBar.text = nil;
     [self searchBarSearchButtonClicked:self.searchBar];
