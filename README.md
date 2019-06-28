@@ -57,9 +57,9 @@ Describe any challenges encountered while building the app.
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
-- [Movie Theater Image](http://www.premierecinemas.net/images/GenericMovieTheater.jpg)
-- [Generic Movie Poster](http://www.rgbstock.com/cache1nToqD/users/g/gr/greekgod/300/mlns11c.jpg)
-- [Movie Ticket](http://absolutebookmarking.net/wp-content/uploads/ticket-printing-templates-meloin-tandemco-blank-tickets-for-printing.png)
+- [Movie Theater Image](http://www.premierecinemas.net/images/GenericMovieTheater.jpg) - graphic
+- [Generic Movie Poster](http://www.rgbstock.com/cache1nToqD/users/g/gr/greekgod/300/mlns11c.jpg) - graphic
+- [Movie Ticket](http://absolutebookmarking.net/wp-content/uploads/ticket-printing-templates-meloin-tandemco-blank-tickets-for-printing.png) - graphic
 
 ## License
 
