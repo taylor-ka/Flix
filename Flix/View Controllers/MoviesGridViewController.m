@@ -66,6 +66,8 @@
         [self.activityIndicator stopAnimating];
     }];
     [task resume];
+    
+    
 }
 
 #pragma mark - Navigation

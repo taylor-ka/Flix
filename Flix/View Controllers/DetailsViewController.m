@@ -10,8 +10,12 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface DetailsViewController ()
+
+// Image Views
 @property (weak, nonatomic) IBOutlet UIImageView *backdropView;
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
+
+// Labels
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;

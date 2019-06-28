@@ -13,7 +13,6 @@
 @interface SearchViewController () <UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -26,10 +25,15 @@
     self.searchBar.delegate = self;
 }
 
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = YES;
+}
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if (searchBar.text.length != 0) { // Show popular movies if no text
-        super.url =[NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/search/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&query=%@&page=1&include_adult=false", searchBar.text]];
-    } else { // User has entered a search
+    if (searchBar.text.length != 0) { // User has entered in a search
+        NSString *searchString = [searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        super.url =[NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/search/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&query=%@&page=1&include_adult=false", searchString]];
+    } else { // Show popular movies if no text
         super.url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&page=1"];
     }
     
@@ -39,9 +43,12 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    // Return to popular movies
-    [self.view endEditing:YES];
+    // Reset search bar and hide keyboard
+    self.searchBar.showsCancelButton = NO;
     self.searchBar.text = nil;
+    [self.view endEditing:YES];
+    
+    // Refresh popular movies
     [self searchBarSearchButtonClicked:self.searchBar];
 }
 

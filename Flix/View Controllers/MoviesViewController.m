@@ -13,11 +13,14 @@
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating>
 
+// Visual elements
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *movies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) UISearchController *searchController;
+
+// Data
+@property (nonatomic, strong) NSArray *movies;
 @property (strong, nonatomic) NSArray *filteredData;
 
 @end
@@ -45,6 +48,7 @@
     [self.searchController.searchBar sizeToFit];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
+    self.searchController.searchBar.placeholder = @"Search Now Playing";
     
     // Setup refresh at the top of scroll
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -55,9 +59,27 @@
 - (void)fetchMovies {
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                                          delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
+            // Create alert
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Get Movies"
+                                                                           message:@"The internet connection appears to be offline."
+                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
+            // Create a try again action
+            UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again"
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                                     [self fetchMovies];
+                                                                 }];
+            // Add the try again action to the alertController
+            [alert addAction:tryAgainAction];
+            
+            // Show alert
+            [self presentViewController:alert animated:YES completion:^{
+                // optional code for what happens after the alert controller has finished presenting
+            }];
             NSLog(@"%@", [error localizedDescription]);
         }
         else {
@@ -112,10 +134,8 @@
 }
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
     NSString *searchText = searchController.searchBar.text;
     if (searchText) {
-        
         if (searchText.length != 0) { // no text
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title beginswith[cd] %@", searchText];
             self.filteredData = [self.movies filteredArrayUsingPredicate:predicate];
@@ -123,10 +143,8 @@
         else {
             self.filteredData = self.movies;
         }
-        
     }
     [self.tableView reloadData];
-    
 }
 
 #pragma mark - Navigation
