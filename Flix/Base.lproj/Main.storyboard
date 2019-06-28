@@ -338,10 +338,18 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="175" height="234"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ear-Wd-nIk">
+                                                    <rect key="frame" x="28" y="100" width="135" height="84"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </view>
                                         <connections>
                                             <outlet property="posterView" destination="d07-bA-ErP" id="cZ6-hr-9FO"/>
+                                            <outlet property="titleIfNoPoster" destination="ear-Wd-nIk" id="zIe-RG-aia"/>
                                             <segue destination="iuy-72-hjW" kind="show" id="lnH-dI-hY1"/>
                                         </connections>
                                     </collectionViewCell>
@@ -364,7 +372,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APX-Wt-beZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1812" y="1504"/>
+            <point key="canvasLocation" x="1812" y="1503.5982008995504"/>
         </scene>
     </scenes>
     <resources>

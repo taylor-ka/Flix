@@ -95,8 +95,10 @@
         NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
         NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
         [cell.posterView setImageWithURL:posterURL];
+        cell.titleIfNoPoster.text = nil;
     } else {
         cell.posterView.image = [UIImage imageNamed:@"generic_movie_poster"];
+        cell.titleIfNoPoster.text = movie[@"title"];
     }
     return cell;
 }
