@@ -34,6 +34,7 @@
 }
 
 - (void)fetchGenres {
+    // Get list of genres
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/genre/movie/list?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
@@ -42,7 +43,7 @@
             NSLog(@"%@", [error localizedDescription]);
         }
         else {
-            // Grab all movie data
+            // Grab all data
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
             // Get all genres and store in a property
@@ -70,6 +71,8 @@
     
     NSDictionary *genre = self.genres[indexPath.row];
     NSString *genreID = genre[@"id"];
+    
+    // Create url from base using genre id
     gridController.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/discover/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&with_genres=%@", genreID]];
     
     // Navigation bar for next
@@ -77,8 +80,8 @@
     
 }
 
-
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    // Create cell displaying genre name
     NSDictionary *genre = self.genres[indexPath.row];
     GenreCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GenreCell"];
     cell.genreLabel.text = genre[@"name"];

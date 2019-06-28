@@ -19,6 +19,7 @@
 @implementation SearchViewController
 
 - (void)viewDidLoad {
+    // Load default movies - popular
     super.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/popular?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&page=1"]];
     [super viewDidLoad];
     
@@ -30,10 +31,13 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if (searchBar.text.length != 0) { // User has entered in a search
+    if (searchBar.text.length != 0) {
+        // Create URL based on user search
+        // Replace spaces to so that query can be processed in URL
         NSString *searchString = [searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         super.url =[NSURL URLWithString:[NSString stringWithFormat:@"https://api.themoviedb.org/3/search/movie?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&query=%@&page=1&include_adult=false", searchString]];
-    } else { // Show popular movies if no text
+    } else {
+        // Show default (popular) movies if no text
         super.url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&page=1"];
     }
     
@@ -51,6 +55,5 @@
     // Refresh popular movies
     [self searchBarSearchButtonClicked:self.searchBar];
 }
-
 
 @end

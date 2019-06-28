@@ -90,7 +90,9 @@
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieCollectionViewCell" forIndexPath:(indexPath)];
     NSDictionary *movie = self.movies[indexPath.item];
     
+    // Clear out image to get rid of flickering
     cell.posterView.image = nil;
+    
     if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) { // If movie poster exists
         // Form URL and make request
         NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
