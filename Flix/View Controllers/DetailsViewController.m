@@ -98,7 +98,7 @@
             // Get the array of videos and store in a property
             NSArray *videos = dataDictionary[@"results"];
             
-            if (videos != nil) { // If there are trailers
+            if (videos.count != 0) { // If there are trailers
                 // Fade in watch trailer button
                 self.watchTrailerButton.alpha = 0.0;
                 self.watchTrailerButton.hidden = NO;
