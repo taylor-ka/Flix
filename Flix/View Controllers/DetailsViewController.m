@@ -8,6 +8,7 @@
 
 #import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "TrailerViewController.h"
 
 @interface DetailsViewController ()
 
@@ -20,6 +21,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
 @property (weak, nonatomic) IBOutlet UILabel *releaseDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
+
+// Watch Trailer
+@property (strong, nonatomic) NSString *key;
+@property (weak, nonatomic) IBOutlet UIButton *watchTrailerButton;
 
 @end
 
@@ -70,16 +75,54 @@
     
     // Navigation title
     self.navigationItem.title = self.movie[@"title"];
+    
+    // Watch trailer?
+    [self loadTrailerInfo];
 }
 
-/*
+-(void)loadTrailerInfo {
+    NSString *movie_id = self.movie[@"id"];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%@/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US", movie_id]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                                          delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error != nil) {
+            
+            NSLog(@"%@", [error localizedDescription]);
+        }
+        else {
+            // Grab all data
+            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            
+            // Get the array of videos and store in a property
+            NSArray *videos = dataDictionary[@"results"];
+            
+            if (videos != nil) { // If there are trailers
+                // Fade in watch trailer button
+                self.watchTrailerButton.alpha = 0.0;
+                self.watchTrailerButton.hidden = NO;
+                [UIView animateWithDuration:0.4 animations:^{
+                    self.watchTrailerButton.alpha = 1.0;
+                }];
+                
+                NSDictionary *trailer = videos[0];
+                self.key = trailer[@"key"];
+            } else {
+                self.watchTrailerButton.hidden = YES;
+            }
+        }
+    }];
+    [task resume];
+}
+
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    TrailerViewController *detailsViewController = [segue destinationViewController];
+    detailsViewController.urlString = [NSString stringWithFormat:@"https://www.youtube.com/watch?v=%@", self.key];
 }
-*/
 
 @end
